@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisrediscache.dao.UserDao">
+    <!--
+    eviction LRU
+    flushInterval缓存时间，以毫秒为单位
+    size缓存大小
+    readOnly如果为false的话，缓存对象必须是可序列化的-->
+    <cache eviction="LRU"
+           type="com.example.mybatisrediscache.RedisCache"
+           flushInterval="120000"
+           size="1024"
+           readOnly="true"/>
+
+
+    <insert id="insertUser">
+        insert into user(username,password) values(#{username},#{password})
+    </insert>
+
+    <select id="findAll" resultType="com.example.mybatisrediscache.entity.User">
+        select * from user
+    </select>
+
+
+</mapper>
